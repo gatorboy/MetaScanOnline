@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="3dp"
+    android:descendantFocusability="blocksDescendants">
+
+    <!-- directory id / Hidden by default -->
+    <TextView
+        android:id="@+id/directory_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <!--  ListRow Left sied Thumbnail image -->
+    <ImageView
+        android:id="@+id/cb_item_select"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/check1"
+        android:adjustViewBounds="true"
+        android:maxHeight="30dip"
+        android:scaleType="fitCenter"
+        android:clickable="true"/>
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/cb_item_select"
+        android:src="@drawable/folder"/>
+    <!-- Item Name -->
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_centerVertical="true"
+        android:textSize="20sp"
+        android:text="Name of file"
+        android:textColor="#000000"
+        android:paddingTop="15dip"
+        android:paddingBottom="15dip"
+        android:paddingLeft="10dip"
+        android:textStyle="normal"/>
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text=""
+        android:layout_marginRight="5dip"
+        android:textSize="10sp"
+        android:textColor="#10bcc9"
+        android:textStyle="bold"/>
+
+
+
+</RelativeLayout>

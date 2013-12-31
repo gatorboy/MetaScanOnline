@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <!-- Album id / Hidden by default -->
+
+    <TextView
+        android:id="@+id/file_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/status"
+        android:textSize="16dip"
+        android:text="Name of file"
+        android:textColor="#000000"
+        android:paddingTop="5dip"
+        android:paddingBottom="1dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/scan_result"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/file_name"
+        android:layout_toLeftOf="@+id/status"
+        android:textSize="10dip"
+        android:text="Result: "
+        android:textColor="#000000"
+        android:paddingTop="1dip"
+        android:paddingBottom="3dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/dataid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/expanded_menu"
+        android:gravity="center"
+        android:text="pass"
+        android:layout_marginRight="5dip"
+        android:textSize="10dip"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/expanded_menu"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/listitem_overflow_menu"
+        android:clickable="true"
+        android:visibility="gone"/>
+</RelativeLayout>

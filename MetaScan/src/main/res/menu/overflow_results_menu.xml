@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/OpenInBrowser"
+        android:title="@string/openInBrowser"
+        android:icon="@drawable/browser_icon"/>
+</menu>
