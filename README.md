@@ -2,7 +2,7 @@ MetaScanOnline
 ==============
 
 
-This document describes the Metascan Online Android Application features and usage. Metascan Online is a user interface on Android to scan the files and folders on the Android phone with the Metascan Online Public API.
+This document describes the Metascan Online Android Application features and usage. Metascan Online is a user interface on Android to scan the files and folders on the Android phone with the Metascan Online Public API. (https://www.metascan-online.com/en/public-api)
 
 Features Implemented:
 All the key features have been implemented as per the requirements. They are
