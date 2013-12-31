@@ -209,8 +209,7 @@ public class SettingsFragment extends Fragment {
                         }
                     }).start();
 
-                    //getActivity().bindService(bgSvc,connection, Context.BIND_AUTO_CREATE);
-                    //getActivity().bindService(bgSvc, mConnection, 0);
+
                 }
                 prefsEditor.commit();
             }
