@@ -16,7 +16,9 @@ This application is developed on the Android Studio 0.3.2 and tested on Samsung 
 
 Design:
 Metascan Online app is designed using the latest features of Android and supports the Android operating systems from Android 3.0.x - API level 11 (HONEYCOMB) to Android 4.4 - API level 19 (KITKAT).
+
 The app contains swipe-able tabs 
+
 1.	SETTINGS
 2.	RESULTS
 3.	DIRECTORY
