@@ -50,6 +50,14 @@
         android:layout_centerInParent="true"
         android:textSize="30sp"
         android:text="No files found" />
+    <ProgressBar
+        android:id="@+id/spinnerProgressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/button1"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/scanButtons"

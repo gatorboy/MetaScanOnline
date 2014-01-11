@@ -1,6 +1,5 @@
 package com.smenedi.metascan.adapter;
 
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 
 import java.io.File;
@@ -11,7 +10,7 @@ import java.util.TreeSet;
 /**
  * Created by smenedi on 12/19/13.
  */
-public class FileExplorer extends ListFragment {
+public class FileExplorer  {
     //private String root;
     private static final String TAG = "F_PATH";
     private File path;

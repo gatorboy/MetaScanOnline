@@ -6,6 +6,7 @@ package com.smenedi.metascan;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.smenedi.metascan.adapter.DirectoryAdapter;
@@ -39,7 +41,7 @@ public class DirectoryFragment extends android.support.v4.app.ListFragment imple
     private InternetConnectionDetector internetConnection;
     private ListView itemListView;
     private ArrayList<DirectoryItem> itemList;
-
+    private ProgressBar spinner;
     //public HashMap<String, Integer> scanMap;//add code to get the data of checked item
     public DirectoryNode directoryNode;
 
@@ -168,6 +170,7 @@ public class DirectoryFragment extends android.support.v4.app.ListFragment imple
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_directory, container, false);
+        spinner = (ProgressBar) rootView.findViewById(R.id.spinnerProgressBar);
         backButton = (ImageView) rootView.findViewById(R.id.backButton);
         scanButton = (Button) rootView.findViewById(R.id.scanButton);
         systemScanButton = (Button) rootView.findViewById(R.id.systemScan);
@@ -244,11 +247,13 @@ public class DirectoryFragment extends android.support.v4.app.ListFragment imple
         scanFiles();
     }
 
-    public Set<File> scanFiles() {
+    public void scanFiles(){
+        new scanAsync().execute();
+
+    }
+    /*public void scanFiles() {
         Set<File> scanningFiles = new TreeSet<File>();
-        //DirectoryNode currentDirectory = rootDirectoryNode;
         for (DirectoryNode scanningNode : rootDirectoryNode.getAllSelectedDirNodesInFolder()) {
-            //Log.e("SCANNING DIRS : ", scanningNodes.file.getAbsolutePath());
             File currentFile = scanningNode.file;
             if (currentFile.isFile()) {
                 scanningFiles.add(currentFile);
@@ -268,10 +273,45 @@ public class DirectoryFragment extends android.support.v4.app.ListFragment imple
         ViewPager viewPager = (ViewPager) ((MainActivity) getActivity()).findViewById(R.id.pager);
         viewPager.setCurrentItem(1, true);
 
-        return scanningFiles;
+    }*/
 
-        //for(File file: scanningFiles)
-        //Log.e("SORTED SCANNING FILES : ", file.getAbsolutePath());
+    class scanAsync extends AsyncTask<Void, Void, Set<File>>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            spinner.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Set<File> doInBackground(Void... params) {
+            Set<File> scanningFiles = new TreeSet<File>();
+            for (DirectoryNode scanningNode : rootDirectoryNode.getAllSelectedDirNodesInFolder()) {
+                File currentFile = scanningNode.file;
+                if (currentFile.isFile()) {
+                    scanningFiles.add(currentFile);
+                } else {
+                    scanningFiles.addAll(scanningNode.getRecursiveFiles());
+                }
+            }
+            return scanningFiles;
+        }
+
+        @Override
+        protected void onPostExecute(Set<File> set) {
+            //super.onPostExecute(aVoid);
+            spinner.setVisibility(View.GONE);
+            // Communication with results Fragment(sending the scanning files to results.
+            String TabOfFragmentResults = ((MainActivity) getActivity()).getTabFragmentResults();
+            ResultsFragment resultFragment = (ResultsFragment) getActivity()
+                    .getSupportFragmentManager()
+                    .findFragmentByTag(TabOfFragmentResults);
+            resultFragment.setResultData(set);
+
+            //Changing the fragment to results after clicking Scan files.
+            ViewPager viewPager = (ViewPager) ((MainActivity) getActivity()).findViewById(R.id.pager);
+            viewPager.setCurrentItem(1, true);
+        }
     }
 
 
