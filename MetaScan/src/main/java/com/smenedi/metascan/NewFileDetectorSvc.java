@@ -3,6 +3,7 @@ package com.smenedi.metascan;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.FileObserver;
 import android.os.IBinder;
@@ -15,7 +16,7 @@ import android.util.Log;
 public class NewFileDetectorSvc extends Service {
 
     public RecursiveNewFileObserver fileObserver;
-
+    AsyncTask<Void, Void, Void> startWatch;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -29,8 +30,15 @@ public class NewFileDetectorSvc extends Service {
     public void onCreate() {
         super.onCreate();
         Log.e("SERVICE STATUS", "STARTED");
-        fileObserver = new RecursiveNewFileObserver(this, Environment.getExternalStorageDirectory().getAbsolutePath(), FileObserver.CREATE|FileObserver.MODIFY);
-        fileObserver.startWatching();
+        fileObserver = new RecursiveNewFileObserver(this, Environment.getExternalStorageDirectory().getAbsolutePath(), FileObserver.CREATE | FileObserver.MODIFY);
+        startWatch = new AsyncTask<Void, Void, Void>() {
+            protected Void doInBackground(Void... params) {
+                fileObserver.startWatching();
+                return null;
+            }
+        };
+        startWatch.execute();
+
     }
 
     @Override
@@ -45,12 +53,17 @@ public class NewFileDetectorSvc extends Service {
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         Log.e("SERVICE STATUS", "CLOSED");
         //Toast.makeText(getApplicationContext(), "Autoscan Disabled", Toast.LENGTH_LONG).show();
-        fileObserver.stopWatching();
+        new AsyncTask<Void, Void, Void>() {
+            protected Void doInBackground(Void... params) {
+                fileObserver.stopWatching();
+                return null;
+            }
+        }.execute();
+
     }
 }

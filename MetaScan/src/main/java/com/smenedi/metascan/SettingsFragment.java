@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -190,25 +191,16 @@ public class SettingsFragment extends Fragment {
                     prefsEditor.putBoolean(TAG_ASCAN_NEW_FILES, false);
                     cbNewFiles.setImageResource(R.drawable.check2);
                     //stop background service
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent bgSvc = new Intent(getActivity(), NewFileDetectorSvc.class);
-                            getActivity().stopService(bgSvc);
-                        }
-                    }).start();
+
+                    Intent bgSvc = new Intent(getActivity(), NewFileDetectorSvc.class);
+                    getActivity().stopService(bgSvc);
+
                 } else {
                     prefsEditor.putBoolean(TAG_ASCAN_NEW_FILES, true);
                     cbNewFiles.setImageResource(R.drawable.check0);
                     //start background service
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent bgSvc = new Intent(getActivity(), NewFileDetectorSvc.class);
-                            getActivity().startService(bgSvc);
-                        }
-                    }).start();
-
+                    Intent bgSvc = new Intent(getActivity(), NewFileDetectorSvc.class);
+                    getActivity().startService(bgSvc);
 
                 }
                 prefsEditor.commit();

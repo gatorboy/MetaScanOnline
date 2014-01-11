@@ -83,39 +83,42 @@ public class RecursiveNewFileObserver {
     }
 
     //@Override
-    public void startWatching() {
+    public synchronized void startWatching() {
         if (mObservers != null)
             return;
 
-        mObservers = new ArrayList<NewFileObserver>();
-        Stack stack = new Stack();
-        stack.push(mPath);
+        try {
+            mObservers = new ArrayList<NewFileObserver>();
+            Stack stack = new Stack();
+            stack.push(mPath);
 
-        while (!stack.isEmpty()) {
-            String parent = String.valueOf(stack.pop());
-            mObservers.add(new NewFileObserver(parent, mMask));
-            File path = new File(parent);
-            File[] files = path.listFiles();
-            if (null == files)
-                continue;
-            for (File f : files) {
-                if (f.isDirectory() && !f.getName().equals(".") && !f.getName()
-                        .equals("..")) {
-                    stack.push(f.getPath());
+            while (!stack.isEmpty()) {
+                String parent = String.valueOf(stack.pop());
+                mObservers.add(new NewFileObserver(parent, mMask));
+                File path = new File(parent);
+                File[] files = path.listFiles();
+                if (null == files)
+                    continue;
+                for (File f : files) {
+                    if (f.isDirectory() && !f.getName().equals(".") && !f.getName()
+                            .equals("..")) {
+                        stack.push(f.getPath());
+                    }
                 }
             }
-        }
 
-        for (NewFileObserver sfo : mObservers) {
-            sfo.startWatching();
+            for (NewFileObserver sfo : mObservers) {
+                sfo.startWatching();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     //@Override
-    public void stopWatching() {
+    public synchronized void stopWatching() {
         if (mObservers == null)
             return;
-
         for (NewFileObserver sfo : mObservers) {
             sfo.stopWatching();
         }
@@ -126,7 +129,7 @@ public class RecursiveNewFileObserver {
     public void onEvent(int event, String path) {
         if ((event & FileObserver.CREATE) != 0 || (event & FileObserver.MODIFY) != 0 || (event & FileObserver.MOVED_TO) != 0) {
             //Check if the threatFiles need to be recreated.
-            if (settingsPreferences.getBoolean(TAG_CLEAR_THREATS, false)){
+            if (settingsPreferences.getBoolean(TAG_CLEAR_THREATS, false)) {
                 SharedPreferences.Editor prefsEditor = settingsPreferences.edit();
                 prefsEditor.putBoolean(TAG_CLEAR_THREATS, false);
                 prefsEditor.commit();
@@ -219,13 +222,13 @@ public class RecursiveNewFileObserver {
                 .setAutoCancel(true);
 
         int defaults = 0;
-        if (settingsPreferences.getBoolean(TAG_SOUND_NOTIFICATION, false)){
+        if (settingsPreferences.getBoolean(TAG_SOUND_NOTIFICATION, false)) {
             //Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-           // builder.setSound(uri);
+            // builder.setSound(uri);
             defaults |= Notification.DEFAULT_SOUND;
         }
-        if (settingsPreferences.getBoolean(TAG_VIBE_NOTIFICATION, false)){
-            defaults|= Notification.DEFAULT_VIBRATE;
+        if (settingsPreferences.getBoolean(TAG_VIBE_NOTIFICATION, false)) {
+            defaults |= Notification.DEFAULT_VIBRATE;
         }
         builder.setDefaults(defaults);
         NotificationManager notificationManager = (NotificationManager) newFileDetectorSvc.getSystemService(newFileDetectorSvc.NOTIFICATION_SERVICE);
