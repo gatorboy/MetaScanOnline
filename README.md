@@ -37,7 +37,7 @@ API Key: User can set the API key by clicking on the textview under the Metascan
 
 Auto Scan: All the new/modified files are automatically scanned by the app, if this option is set. 
 
-Notifications: Auto scan notifications are displayed by popping as a notification. The sound and vibrate features can be turned on/off here.
+Notifications: Auto scan notifications are displayed by popping as a notification. The notifications are displayed only if a threat is detected. The sound and vibrate features can be turned on/off here.
 <br><br><img src="https://raw.github.com/gatorboy/MetaScanOnline/master/Documents/Images/Notifications1.png" alt="Notification" title="Notification" height="80px" width="500px" />
 
 Notifications can be cleared or cancelled. If the notifications are cleared, they are deleted. If the notifications are canceled, they still exist in the system and re-appear next time a threat is detected.
