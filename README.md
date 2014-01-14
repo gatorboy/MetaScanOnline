@@ -1,5 +1,5 @@
-MetaScanOnline
-==============
+MetaScanOnline Android App
+==========================
 
 
 This document describes the Metascan Online Android Application features and usage. Metascan Online is a user interface on Android to virus-scan the files and folders on the Android phone with the Metascan Online Public API. (https://www.metascan-online.com/en/public-api)
